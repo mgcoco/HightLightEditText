@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HightLightEditText">
+        <attr name="mcs_hightlight_text_color" format="integer"/>
+        <attr name="mcs_hightlight_text_size" format="integer"/>
+        <attr name="mcs_hightlight_text" format="string"/>
+        <attr name="mcs_text_color" format="integer"/>
+        <attr name="mcs_text_size" format="integer"/>
+        <attr name="mcs_text" format="string"/>
+        <attr name="mcs_hint_text_color" format="integer"/>
+        <attr name="mcs_singleLineEllipsis" format="boolean" />
+        <attr name="mcs_is_necessary" format="boolean" />
+        <attr name="mcs_errorColor" format="color" />
+        <attr name="mcs_focus_color" format="color" />
+        <attr name="mcs_icon" format="integer" />
+        <attr name="android:inputType"/>
+        <attr name="android:imeOptions"/>
+        <attr name="android:lines"/>
+        <attr name="android:hint"/>
+        <attr name="mcs_focusable"/>
+    </declare-styleable>
+
+</resources>

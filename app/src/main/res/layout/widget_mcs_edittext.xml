@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:gravity="center|left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mcs_necessary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:layout_marginRight="5dp"
+            android:gravity="center|left"
+            android:text="*"
+            android:textColor="#FF0000" />
+
+        <TextView
+            android:id="@+id/mcs_hightlight_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center|left" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/mcs_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/white"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textCursorDrawable="@drawable/img_cursor_white" />
+
+        <ImageView
+            android:id="@+id/mcs_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:scaleType="fitCenter"/>
+
+        <View
+            android:id="@+id/mcs_edittext_msk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/mcs_edittext"
+            android:layout_alignTop="@id/mcs_edittext"
+            android:background="@android:color/transparent"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>
