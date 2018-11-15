@@ -276,6 +276,18 @@ public class HightLightEditText extends LinearLayout {
     public void setOnIconClickListener(OnClickListener listener){
         mIcon.setOnClickListener(listener);
     }
+    
+    public EditText getEditText(){
+        return mEditText;
+    }
+
+    public TextView getHightLightTextView(){
+        return mHightLightTextView;
+    }
+
+    public ImageView getIcon() {
+        return mIcon;
+    }
 
     public static String[] checkAllNecessaryField(View view){
         ArrayList<HightLightEditText> necessaryField = new ArrayList<>();
