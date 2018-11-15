@@ -1,10 +1,14 @@
 package com.mgcoco.hightlightedittext;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class HightLightEditText extends LinearLayout {
@@ -91,19 +96,19 @@ public class HightLightEditText extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HightLightEditText);
 
         mSingleLineEllipsis = typedArray.getBoolean(R.styleable.HightLightEditText_mcs_singleLineEllipsis, false);
-        mHightlightColor = typedArray.getInteger(R.styleable.HightLightEditText_mcs_hightlight_text_color, Color.WHITE);
+        mHightlightColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_hightlight_text_color, Color.WHITE);
         mHightlightTextSize = typedArray.getInteger(R.styleable.HightLightEditText_mcs_hightlight_text_size, 15);
         mHightlightText = typedArray.getString(R.styleable.HightLightEditText_mcs_hightlight_text);
 
         mIsFocusable = typedArray.getBoolean(R.styleable.HightLightEditText_mcs_focusable, true);
 
-        mTextColor = typedArray.getInteger(R.styleable.HightLightEditText_mcs_text_color, Color.WHITE);
+        mTextColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_text_color, Color.WHITE);
         mTextSize = typedArray.getInteger(R.styleable.HightLightEditText_mcs_text_size, 18);
         mText = typedArray.getString(R.styleable.HightLightEditText_mcs_text);
 
-        mHintTextColor = typedArray.getInteger(R.styleable.HightLightEditText_mcs_hint_text_color, Color.GRAY);
+        mHintTextColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_hint_text_color, Color.GRAY);
 
-        mFocusColor = typedArray.getInteger(R.styleable.HightLightEditText_mcs_focus_color, mTextColor);
+        mFocusColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_focus_color, mTextColor);
 
         mResIcon = typedArray.getDrawable(R.styleable.HightLightEditText_mcs_icon);
 
@@ -144,13 +149,13 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setText(mText);
         mEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mTextSize);
         mEditText.setTextColor(mTextColor);
-
         mEditText.setHintTextColor(mHintTextColor);
 
         mEditText.setSingleLine(mSingleLineEllipsis);
         mEditText.setInputType(mInputType);
         mEditText.setImeOptions(mImeOptions);
         mEditText.setHint(mHint);
+
         if(mEditText.getText() == null || mEditText.getText().length() == 0)
             mHightLightTextView.setVisibility(INVISIBLE);
         else
@@ -182,9 +187,19 @@ public class HightLightEditText extends LinearLayout {
         ((TextView)findViewById(R.id.mcs_necessary)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, mHightlightTextSize);
         findViewById(R.id.mcs_necessary).setVisibility(mIsNecessary ? VISIBLE : GONE);
 
+        setCursorColor(mFocusColor);
+
+        int[][] states = new int[][] {
+                new int[] { android.R.attr.state_focused},
+                new int[] { -android.R.attr.state_focused},
+        };
+        ColorStateList colorStateList = new ColorStateList(states, new int[]{mFocusColor, mHightlightColor});
+        mEditText.setBackgroundTintList(colorStateList);
+
         mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+
                 if(hasFocus) {
                     mHightLightTextView.setTextColor(mFocusColor);
                 }
@@ -202,7 +217,7 @@ public class HightLightEditText extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count == 0)
+                if(s.length() == 0)
                     mHightLightTextView.setVisibility(INVISIBLE);
                 else
                     mHightLightTextView.setVisibility(VISIBLE);
@@ -213,6 +228,31 @@ public class HightLightEditText extends LinearLayout {
 
             }
         });
+    }
+
+    public void setCursorColor(@ColorInt int color) {
+        try {
+            // Get the cursor resource id
+            Field field = TextView.class.getDeclaredField("mCursorDrawableRes");
+            field.setAccessible(true);
+            int drawableResId = field.getInt(mEditText);
+
+            // Get the editor
+            field = TextView.class.getDeclaredField("mEditor");
+            field.setAccessible(true);
+            Object editor = field.get(mEditText);
+
+            // Get the drawable and set a color filter
+            Drawable drawable = ContextCompat.getDrawable(mEditText.getContext(), drawableResId);
+            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            Drawable[] drawables = {drawable, drawable};
+
+            // Set the drawables
+            field = editor.getClass().getDeclaredField("mCursorDrawable");
+            field.setAccessible(true);
+            field.set(editor, drawables);
+        } catch (Exception ignored) {
+        }
     }
 
     public String getHightLightText(){
@@ -233,10 +273,14 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setText(text);
     }
 
-    public static String findAllNecessaryField(View view){
+    public void setOnIconClickListener(OnClickListener listener){
+        mIcon.setOnClickListener(listener);
+    }
+
+    public static String[] checkAllNecessaryField(View view){
         ArrayList<HightLightEditText> necessaryField = new ArrayList<>();
         View parent = findViewParent(view);
-        if(parent != null && parent instanceof ViewGroup){
+        if(parent != null && parent instanceof ViewGroup && !(parent instanceof ViewPager)){
             ViewGroup root = (ViewGroup)parent;
             appendMcsEditText(necessaryField, root);
         }
@@ -245,15 +289,12 @@ public class HightLightEditText extends LinearLayout {
                 necessaryField.add((HightLightEditText)parent);
             }
         }
-        String toast = "";
+        ArrayList<String> field = new ArrayList<>();
         for(HightLightEditText child:necessaryField){
-            toast += child.getHightLightText() + ", ";
+            field.add(child.getHightLightText());
         }
-        if(toast != null && toast.endsWith(", "))
-            toast = toast.substring(0, toast.length() - 2);
-        else
-            return null;
-        return toast + " cannot be empty";
+
+        return field.toArray(new String[field.size()]);
     }
 
     public static void appendMcsEditText(ArrayList<HightLightEditText> necessaryField, ViewGroup root){
@@ -276,34 +317,11 @@ public class HightLightEditText extends LinearLayout {
         return root;
     }
 
-    /**
-     * Covert dp to px
-     * @param dp
-     * @param context
-     * @return pixel
-     */
     public static float convertDpToPixel(float dp, Context context){
         float px = dp * getDensity(context);
         return px;
     }
-    /**
-     * Covert px to dp
-     * @param px
-     * @param context
-     * @return dp
-     */
-    public static float convertPixelToDp(float px, Context context){
-        float dp = px / getDensity(context);
-        return dp;
-    }
-    /**
-     * 取得螢幕密度
-     * 120dpi = 0.75
-     * 160dpi = 1 (default)
-     * 240dpi = 1.5
-     * @param context
-     * @return
-     */
+
     public static float getDensity(Context context){
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return metrics.density;
