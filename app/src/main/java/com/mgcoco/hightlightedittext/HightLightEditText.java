@@ -6,10 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -76,12 +72,12 @@ public class HightLightEditText extends LinearLayout {
         init(context, null);
     }
 
-    public HightLightEditText(Context context, @Nullable AttributeSet attrs) {
+    public HightLightEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public HightLightEditText(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public HightLightEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -230,7 +226,7 @@ public class HightLightEditText extends LinearLayout {
         });
     }
 
-    public void setCursorColor(@ColorInt int color) {
+    public void setCursorColor(int color) {
         try {
             // Get the cursor resource id
             Field field = TextView.class.getDeclaredField("mCursorDrawableRes");
@@ -243,7 +239,7 @@ public class HightLightEditText extends LinearLayout {
             Object editor = field.get(mEditText);
 
             // Get the drawable and set a color filter
-            Drawable drawable = ContextCompat.getDrawable(mEditText.getContext(), drawableResId);
+            Drawable drawable = getContext().getResources().getDrawable(drawableResId, null);
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
             Drawable[] drawables = {drawable, drawable};
 
@@ -292,7 +288,7 @@ public class HightLightEditText extends LinearLayout {
     public static String[] checkAllNecessaryField(View view){
         ArrayList<HightLightEditText> necessaryField = new ArrayList<>();
         View parent = findViewParent(view);
-        if(parent != null && parent instanceof ViewGroup && !(parent instanceof ViewPager)){
+        if(parent != null && parent instanceof ViewGroup){
             ViewGroup root = (ViewGroup)parent;
             appendMcsEditText(necessaryField, root);
         }
@@ -324,7 +320,7 @@ public class HightLightEditText extends LinearLayout {
     }
 
     public static View findViewParent(View root){
-        if(root.getParent() instanceof ViewGroup && !(root.getParent() instanceof ViewPager))
+        if(root.getParent() instanceof ViewGroup)
             return findViewParent((View)root.getParent());
         return root;
     }
