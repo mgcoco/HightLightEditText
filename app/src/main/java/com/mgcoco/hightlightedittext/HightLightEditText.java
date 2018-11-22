@@ -137,6 +137,30 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setInputType(inputType);
     }
 
+    public void setEditFocusable(boolean focusable){
+        mIsFocusable = focusable;
+
+        if(!mIsFocusable) {
+            mEditText.setEnabled(false);
+            mEditMask.setVisibility(VISIBLE);
+            mEditMask.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performClick();
+                }
+            });
+        }
+        else{
+            mEditText.setEnabled(true);
+            mEditMask.setVisibility(GONE);
+        }
+    }
+
+    public void setNecessary(boolean isNecessary){
+        mIsNecessary = isNecessary;
+        findViewById(R.id.mcs_necessary).setVisibility(mIsNecessary ? VISIBLE : GONE);
+    }
+
     private void initViewParam(){
         mHightLightTextView.setText(mHightlightText);
         mHightLightTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mHightlightTextSize);
