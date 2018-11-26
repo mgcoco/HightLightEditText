@@ -38,9 +38,8 @@
             android:id="@+id/mcs_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"/>
 
         <ImageView
             android:id="@+id/mcs_icon"

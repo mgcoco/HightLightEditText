@@ -178,8 +178,10 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setInputType(mInputType);
         mEditText.setImeOptions(mImeOptions);
         mEditText.setHint(mHint);
-        if(mTextBackground != null)
+        if(mTextBackground != null) {
             mEditText.setBackground(mTextBackground);
+            mEditText.setBackgroundTintList(null);
+        }
         else{
             int[][] states = new int[][] {
                 new int[] { android.R.attr.state_focused},
