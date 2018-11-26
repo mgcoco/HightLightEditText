@@ -47,6 +47,8 @@ public class HightLightEditText extends LinearLayout {
 
     private int mTextSize;
 
+    private Drawable mTextBackground;
+
     private String mText;
 
     private int mInputType;
@@ -101,6 +103,7 @@ public class HightLightEditText extends LinearLayout {
         mTextColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_text_color, Color.WHITE);
         mTextSize = typedArray.getInteger(R.styleable.HightLightEditText_mcs_text_size, 18);
         mText = typedArray.getString(R.styleable.HightLightEditText_mcs_text);
+        mTextBackground = typedArray.getDrawable(R.styleable.HightLightEditText_mcs_text_background);
 
         mHintTextColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_hint_text_color, Color.GRAY);
 
@@ -175,6 +178,8 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setInputType(mInputType);
         mEditText.setImeOptions(mImeOptions);
         mEditText.setHint(mHint);
+        if(mTextBackground != null)
+            mEditText.setBackground(mTextBackground);
 
         if(mEditText.getText() == null || mEditText.getText().length() == 0)
             mHightLightTextView.setVisibility(INVISIBLE);

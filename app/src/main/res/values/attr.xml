@@ -8,6 +8,7 @@
         <attr name="mcs_text_color" format="color"/>
         <attr name="mcs_text_size" format="integer"/>
         <attr name="mcs_text" format="string"/>
+        <attr name="mcs_text_background" format="integer" />
         <attr name="mcs_hint_text_color" format="color"/>
         <attr name="mcs_singleLineEllipsis" format="boolean" />
         <attr name="mcs_is_necessary" format="boolean" />
