@@ -180,6 +180,14 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setHint(mHint);
         if(mTextBackground != null)
             mEditText.setBackground(mTextBackground);
+        else{
+            int[][] states = new int[][] {
+                new int[] { android.R.attr.state_focused},
+                new int[] { -android.R.attr.state_focused},
+            };
+            ColorStateList colorStateList = new ColorStateList(states, new int[]{mFocusColor, mHightlightColor});
+            mEditText.setBackgroundTintList(colorStateList);
+        }
 
         if(mEditText.getText() == null || mEditText.getText().length() == 0)
             mHightLightTextView.setVisibility(INVISIBLE);
@@ -213,13 +221,6 @@ public class HightLightEditText extends LinearLayout {
         findViewById(R.id.mcs_necessary).setVisibility(mIsNecessary ? VISIBLE : GONE);
 
         setCursorColor(mFocusColor);
-
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_focused},
-                new int[] { -android.R.attr.state_focused},
-        };
-        ColorStateList colorStateList = new ColorStateList(states, new int[]{mFocusColor, mHightlightColor});
-        mEditText.setBackgroundTintList(colorStateList);
 
         mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
