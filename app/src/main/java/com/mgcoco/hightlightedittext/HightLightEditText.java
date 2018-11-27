@@ -144,6 +144,7 @@ public class HightLightEditText extends LinearLayout {
         mIsFocusable = focusable;
         mEditText.setFocusable(focusable);
         mEditText.setEnabled(focusable);
+        mEditText.setFocusableInTouchMode(focusable);
 
         if(!mIsFocusable) {
             mEditMask.setVisibility(VISIBLE);
