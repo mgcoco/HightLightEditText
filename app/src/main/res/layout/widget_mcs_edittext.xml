@@ -32,7 +32,8 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="3dp">
 
         <EditText
             android:id="@+id/mcs_edittext"

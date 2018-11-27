@@ -142,9 +142,10 @@ public class HightLightEditText extends LinearLayout {
 
     public void setEditFocusable(boolean focusable){
         mIsFocusable = focusable;
+        mEditText.setFocusable(focusable);
+        mEditText.setEnabled(focusable);
 
         if(!mIsFocusable) {
-            mEditText.setEnabled(false);
             mEditMask.setVisibility(VISIBLE);
             mEditMask.setOnClickListener(new OnClickListener() {
                 @Override
@@ -154,9 +155,14 @@ public class HightLightEditText extends LinearLayout {
             });
         }
         else{
-            mEditText.setEnabled(true);
             mEditMask.setVisibility(GONE);
         }
+    }
+
+    @Override
+    public void setSelected(boolean isSelected){
+        super.setSelected(isSelected);
+        mEditText.setSelected(isSelected);
     }
 
     public void setNecessary(boolean isNecessary){
@@ -178,6 +184,14 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setInputType(mInputType);
         mEditText.setImeOptions(mImeOptions);
         mEditText.setHint(mHint);
+
+        if(mHint != null && mHint.length() > 0){
+            mEditText.setHint(mHint);
+        }
+        else{
+            mEditText.setHint(mHightlightText);
+        }
+
         if(mTextBackground != null) {
             mEditText.setBackground(mTextBackground);
             mEditText.setBackgroundTintList(null);
