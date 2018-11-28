@@ -43,6 +43,8 @@ public class HightLightEditText extends LinearLayout {
 
     private String mHightlightText;
 
+    private boolean mHightlightFixed;
+
     private int mTextColor;
 
     private int mTextSize;
@@ -97,6 +99,7 @@ public class HightLightEditText extends LinearLayout {
         mHightlightColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_hightlight_text_color, Color.WHITE);
         mHightlightTextSize = typedArray.getInteger(R.styleable.HightLightEditText_mcs_hightlight_text_size, 15);
         mHightlightText = typedArray.getString(R.styleable.HightLightEditText_mcs_hightlight_text);
+        mHightlightFixed = typedArray.getBoolean(R.styleable.HightLightEditText_mcs_hightlight_fixed, false);
 
         mIsFocusable = typedArray.getBoolean(R.styleable.HightLightEditText_mcs_focusable, true);
 
@@ -206,10 +209,15 @@ public class HightLightEditText extends LinearLayout {
             mEditText.setBackgroundTintList(colorStateList);
         }
 
-        if(mEditText.getText() == null || mEditText.getText().length() == 0)
-            mHightLightTextView.setVisibility(INVISIBLE);
-        else
+        if(mHightlightFixed){
             mHightLightTextView.setVisibility(VISIBLE);
+        }
+        else{
+            if(mEditText.getText() == null || mEditText.getText().length() == 0)
+                mHightLightTextView.setVisibility(INVISIBLE);
+            else
+                mHightLightTextView.setVisibility(VISIBLE);
+        }
 
         mIcon.getLayoutParams().width = (int)convertDpToPixel(mTextSize, getContext());
         mIcon.getLayoutParams().height = (int)convertDpToPixel(mTextSize, getContext());
@@ -260,7 +268,7 @@ public class HightLightEditText extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() == 0)
+                if(mHightlightFixed && s.length() == 0)
                     mHightLightTextView.setVisibility(INVISIBLE);
                 else
                     mHightLightTextView.setVisibility(VISIBLE);
@@ -332,12 +340,11 @@ public class HightLightEditText extends LinearLayout {
         return mIcon;
     }
 
-    public static String[] checkAllNecessaryField(View view){
+    public static String[] checkAllNecessaryField(View parent){
         ArrayList<HightLightEditText> necessaryField = new ArrayList<>();
-        View parent = findViewParent(view);
         if(parent != null && parent instanceof ViewGroup){
             ViewGroup root = (ViewGroup)parent;
-            appendMcsEditText(necessaryField, root);
+            appendMcsEditText(necessaryField, root, true);
         }
         else if(parent instanceof HightLightEditText && parent.getVisibility() == VISIBLE){
             if(((HightLightEditText)parent).isNecessary() && (((HightLightEditText)parent).getText() == null || ((HightLightEditText)parent).getText().length() == 0)){
@@ -352,16 +359,36 @@ public class HightLightEditText extends LinearLayout {
         return field.toArray(new String[field.size()]);
     }
 
-    public static void appendMcsEditText(ArrayList<HightLightEditText> necessaryField, ViewGroup root){
+    public static ArrayList<HightLightEditText> getAllHightlightEditText(View parent){
+        ArrayList<HightLightEditText> list = new ArrayList<>();
+        if(parent != null && parent instanceof ViewGroup){
+            ViewGroup root = (ViewGroup)parent;
+            appendMcsEditText(list, root, false);
+        }
+        else if(parent instanceof HightLightEditText && parent.getVisibility() == VISIBLE){
+            if(((HightLightEditText)parent).isNecessary() && (((HightLightEditText)parent).getText() == null || ((HightLightEditText)parent).getText().length() == 0)){
+                list.add((HightLightEditText)parent);
+            }
+        }
+
+        return list;
+    }
+
+    private static void appendMcsEditText(ArrayList<HightLightEditText> necessaryField, ViewGroup root, boolean appendNecessary){
         for(int i = 0; i < root.getChildCount(); i++){
             View child = root.getChildAt(i);
             if(child instanceof HightLightEditText && child.getVisibility() == VISIBLE){
-                if(((HightLightEditText)child).isNecessary() && (((HightLightEditText)child).getText() == null || ((HightLightEditText)child).getText().length() == 0)){
-                    necessaryField.add((HightLightEditText)child);
+                if(appendNecessary) {
+                    if (((HightLightEditText) child).isNecessary() && (((HightLightEditText) child).getText() == null || ((HightLightEditText) child).getText().length() == 0)) {
+                        necessaryField.add((HightLightEditText) child);
+                    }
+                }
+                else{
+                    necessaryField.add((HightLightEditText) child);
                 }
             }
             else if(child instanceof ViewGroup){
-                appendMcsEditText(necessaryField, (ViewGroup) child);
+                appendMcsEditText(necessaryField, (ViewGroup) child, appendNecessary);
             }
         }
     }

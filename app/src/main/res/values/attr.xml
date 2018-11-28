@@ -5,6 +5,7 @@
         <attr name="mcs_hightlight_text_color" format="color"/>
         <attr name="mcs_hightlight_text_size" format="integer"/>
         <attr name="mcs_hightlight_text" format="string"/>
+        <attr name="mcs_hightlight_fixed" format="boolean" />
         <attr name="mcs_text_color" format="color"/>
         <attr name="mcs_text_size" format="integer"/>
         <attr name="mcs_text" format="string"/>
@@ -12,7 +13,6 @@
         <attr name="mcs_hint_text_color" format="color"/>
         <attr name="mcs_singleLineEllipsis" format="boolean" />
         <attr name="mcs_is_necessary" format="boolean" />
-        <attr name="mcs_errorColor" format="color" />
         <attr name="mcs_focus_color" format="color" />
         <attr name="mcs_icon" format="integer" />
         <attr name="android:inputType"/>
