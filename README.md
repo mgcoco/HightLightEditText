@@ -22,7 +22,7 @@ allprojects {
 }  
   
 dependencies {  
-   implementation 'com.github.mgcoco:HightLightEditText:v1.0.11'  
+   implementation 'com.github.mgcoco:HightLightEditText:v1.0.12'
 }  
 ```  
   

@@ -192,7 +192,7 @@ public class HightLightEditText extends LinearLayout {
         if(mHint != null && mHint.length() > 0){
             mEditText.setHint(mHint);
         }
-        else{
+        else if(!mHightlightFixed){
             mEditText.setHint(mHightlightText);
         }
 
@@ -268,7 +268,7 @@ public class HightLightEditText extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(mHightlightFixed && s.length() == 0)
+                if(!mHightlightFixed && s.length() == 0)
                     mHightLightTextView.setVisibility(INVISIBLE);
                 else
                     mHightLightTextView.setVisibility(VISIBLE);
