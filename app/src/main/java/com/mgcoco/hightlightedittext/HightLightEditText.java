@@ -87,11 +87,11 @@ public class HightLightEditText extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(getContext(), R.layout.widget_mcs_edittext, this);
-        mEditText = findViewById(R.id.mcs_edittext);
-        mHightLightTextView = findViewById(R.id.mcs_hightlight_text);
-        mEditMask = findViewById(R.id.mcs_edittext_msk);
-        mIcon = findViewById(R.id.mcs_icon);
+        View v = inflate(getContext(), R.layout.widget_mcs_edittext, this);
+        mEditText = v.findViewById(R.id.mcs_edittext);
+        mHightLightTextView = v.findViewById(R.id.mcs_hightlight_text);
+        mEditMask = v.findViewById(R.id.mcs_edittext_msk);
+        mIcon = v.findViewById(R.id.mcs_icon);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HightLightEditText);
 
