@@ -65,6 +65,8 @@ public class HightLightEditText extends LinearLayout {
 
     private Drawable mResIcon;
 
+    private int mResIconColor;
+
     private String mHint;
 
     private int mFocusColor;
@@ -113,6 +115,7 @@ public class HightLightEditText extends LinearLayout {
         mFocusColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_focus_color, mTextColor);
 
         mResIcon = typedArray.getDrawable(R.styleable.HightLightEditText_mcs_icon);
+        mResIconColor = typedArray.getColor(R.styleable.HightLightEditText_mcs_icon_tint_color, Color.WHITE);
 
         mIsNecessary = typedArray.getBoolean(R.styleable.HightLightEditText_mcs_is_necessary, DEF_IS_NECESSARY_COLUMN);
 
@@ -222,8 +225,14 @@ public class HightLightEditText extends LinearLayout {
         mIcon.getLayoutParams().width = (int)convertDpToPixel(mTextSize, getContext());
         mIcon.getLayoutParams().height = (int)convertDpToPixel(mTextSize, getContext());
 
-        if(mResIcon != null)
+        if(mResIcon != null) {
             mIcon.setImageDrawable(mResIcon);
+            int[][] states = new int[][] {
+                    new int[] { -android.R.attr.state_focused},
+            };
+            ColorStateList colorStateList = new ColorStateList(states, new int[]{mResIconColor});
+            mIcon.setImageTintList(colorStateList);
+        }
         else
             mIcon.setVisibility(GONE);
 
