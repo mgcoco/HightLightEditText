@@ -4,11 +4,11 @@
     <declare-styleable name="HightLightEditText">
         <attr name="mcs_hightlight_text_color" format="color"/>
         <attr name="mcs_hightlight_text_size" format="dimension"/>
-        <attr name="mcs_hightlight_text" format="reference"/>
+        <attr name="mcs_hightlight_text" format="string"/>
         <attr name="mcs_hightlight_fixed" format="boolean" />
         <attr name="mcs_text_color" format="color"/>
         <attr name="mcs_text_size" format="dimension"/>
-        <attr name="mcs_text" format="reference"/>
+        <attr name="mcs_text" format="string"/>
         <attr name="mcs_text_background" format="reference" />
         <attr name="mcs_hint_text_color" format="color"/>
         <attr name="mcs_singleLineEllipsis" format="boolean" />
