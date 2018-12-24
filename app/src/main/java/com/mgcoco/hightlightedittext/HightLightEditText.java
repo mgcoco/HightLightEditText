@@ -6,8 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -317,7 +315,7 @@ public class HightLightEditText extends LinearLayout {
         mIcon.setOnClickListener(listener);
     }
 
-    public void setHightlightTextColor(@ColorInt int color){
+    public void setHightlightTextColor(int color){
         mHightlightColor = color;
         mHightlightTextView.setTextColor(mHightlightColor);
     }
@@ -345,7 +343,7 @@ public class HightLightEditText extends LinearLayout {
         mHightlightTextView.setText(text);
     }
 
-    public void setTextColor(@ColorInt int color){
+    public void setTextColor(int color){
         mTextColor = color;
         mEditText.setTextColor(mTextColor);
     }
@@ -365,12 +363,12 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setBackground(drawable);
     }
 
-    public void setBackground(@DrawableRes int drawable){
+    public void setBackground(int drawable){
         mTextBackground = getResources().getDrawable(drawable, null);
         mEditText.setBackground(mTextBackground);
     }
 
-    public void setHintTextColor(@ColorInt int color){
+    public void setHintTextColor(int color){
         mHintTextColor = color;
         mEditText.setHintTextColor(mHightlightColor);
     }
@@ -380,12 +378,12 @@ public class HightLightEditText extends LinearLayout {
         mEditText.setHint(hint);
     }
 
-    public void setIconDrawable(@DrawableRes int drawable){
+    public void setIconDrawable(int drawable){
         mResIcon = getResources().getDrawable(drawable, null);
         mIcon.setImageDrawable(mResIcon);
     }
 
-    public void setIconTintColor(@ColorInt int color){
+    public void setIconTintColor(int color){
         mResIconColor = color;
         int[][] states = new int[][] {
                 new int[] { -android.R.attr.state_focused},
