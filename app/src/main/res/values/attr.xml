@@ -3,24 +3,24 @@
 
     <declare-styleable name="HightLightEditText">
         <attr name="mcs_hightlight_text_color" format="color"/>
-        <attr name="mcs_hightlight_text_size" format="integer"/>
-        <attr name="mcs_hightlight_text" format="string"/>
+        <attr name="mcs_hightlight_text_size" format="dimension"/>
+        <attr name="mcs_hightlight_text" format="reference"/>
         <attr name="mcs_hightlight_fixed" format="boolean" />
         <attr name="mcs_text_color" format="color"/>
-        <attr name="mcs_text_size" format="integer"/>
-        <attr name="mcs_text" format="string"/>
-        <attr name="mcs_text_background" format="integer" />
+        <attr name="mcs_text_size" format="dimension"/>
+        <attr name="mcs_text" format="reference"/>
+        <attr name="mcs_text_background" format="reference" />
         <attr name="mcs_hint_text_color" format="color"/>
         <attr name="mcs_singleLineEllipsis" format="boolean" />
         <attr name="mcs_is_necessary" format="boolean" />
         <attr name="mcs_focus_color" format="color" />
-        <attr name="mcs_icon" format="integer" />
-        <attr name="mcs_icon_tint_color" format="integer" />
+        <attr name="mcs_icon" format="reference" />
+        <attr name="mcs_icon_tint_color" format="color" />
+        <attr name="mcs_focusable" format="boolean"/>
         <attr name="android:inputType"/>
         <attr name="android:imeOptions"/>
         <attr name="android:lines"/>
         <attr name="android:hint"/>
-        <attr name="mcs_focusable"/>
     </declare-styleable>
 
 </resources>
