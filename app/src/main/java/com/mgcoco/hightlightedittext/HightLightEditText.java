@@ -99,14 +99,14 @@ public class HightLightEditText extends LinearLayout {
 
         mSingleLineEllipsis = ta.getBoolean(R.styleable.HightLightEditText_mcs_singleLineEllipsis, false);
         mHightlightTextColor = ta.getColor(R.styleable.HightLightEditText_mcs_hightlight_text_color, Color.WHITE);
-        mHightlightTextSize = ta.getDimensionPixelSize(R.styleable.HightLightEditText_mcs_hightlight_text_size, 15);
+        mHightlightTextSize = ta.getDimensionPixelSize(R.styleable.HightLightEditText_mcs_hightlight_text_size, (int)convertDpToPixel(15, context));
         mHightlightText = ta.getString(R.styleable.HightLightEditText_mcs_hightlight_text);
         mHightlightFixed = ta.getBoolean(R.styleable.HightLightEditText_mcs_hightlight_fixed, false);
 
         mIsFocusable = ta.getBoolean(R.styleable.HightLightEditText_mcs_focusable, true);
 
         mTextColor = ta.getColor(R.styleable.HightLightEditText_mcs_text_color, Color.WHITE);
-        mTextSize = ta.getDimensionPixelSize(R.styleable.HightLightEditText_mcs_text_size, 18);
+        mTextSize = ta.getDimensionPixelSize(R.styleable.HightLightEditText_mcs_text_size, (int)convertDpToPixel(18, context));
         mText = ta.getString(R.styleable.HightLightEditText_mcs_text);
         mTextBackground = ta.getDrawable(R.styleable.HightLightEditText_mcs_text_background);
 
@@ -215,8 +215,8 @@ public class HightLightEditText extends LinearLayout {
 
         setHightlightFixed(mHightlightFixed);
 
-        mIcon.getLayoutParams().width = (int)convertDpToPixel(mTextSize, getContext());
-        mIcon.getLayoutParams().height = (int)convertDpToPixel(mTextSize, getContext());
+        mIcon.getLayoutParams().width = mTextSize;
+        mIcon.getLayoutParams().height = mTextSize;
 
         if(mResIcon != null) {
             mIcon.setImageDrawable(mResIcon);
