@@ -371,7 +371,7 @@ public class HightLightEditText extends LinearLayout {
 
     public void setHintTextColor(int color){
         mHintTextColor = color;
-        mEditText.setHintTextColor(mHightlightTextColor);
+        mEditText.setHintTextColor(mHintTextColor);
     }
 
     public void setHint(CharSequence hint){
